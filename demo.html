@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+
+<style>
+
+body, height {
+	font-family: sans-serif;
+	height: 100%; 
+}
+.sceneIndicatorBox {
+	 padding:2em;
+	 margin-left:2em;
+	 background-color:#F60;
+	 border-radius:0 2em;
+	 left:0;
+	 top:0;
+	 position:fixed;
+	 z-index:999;
+}
+.parallax > [class*="scene"] {
+	text-indent: -9999px;
+	height: 75vh;   /*questionable */
+	background-attachment: fixed;
+	backgound-position: top center;
+	background-size: cover;
+	position: relative;
+		}
+		
+.parallax:nth-child( 2n ) {
+	box-shadow: inset 0 0 1em #111; 
+	}
+	
+.parallax > .scene1, .parallax > .scene4,  {
+	height: 100vh;
+	} 
+
+.parallax > .scene1 {
+	background-image: url(images/2.jpg);
+	}
+
+.parallax > .scene4 {
+	background-image:url(images/3.jpg);
+	}
+	
+.parallax > .scene2 {
+	background-image:url(images/4.jpg);
+	}
+	
+.parallax > .scene3 {
+	background-image:url(images/5.jpg);
+	}	
+
+.parallax > .scene5 {
+	box-shadow: inset 0 0 1em #111;
+	background-image: url(images/6.jpg);
+	height:800px;
+	}	
+	
+.parallax > .capture {
+	text-indent: 0;
+	width: 200px;
+	padding: 1em;
+	margin: -1.5em 1em 0 0;
+	background: rgba(#f3f3f3, 0.75);
+	box-shadow: 0 1px 0.125 em #333;
+	float: right;
+	
+	}
+	
+article > section > .container {
+	width: 600px;
+	}	
+			
+article > header {
+	font-size: 2em;
+	padding : 1em;
+	margin : -5em 0 0 0;
+	backgound-color: rgba( #fff, 0.75 );
+	position: relative;
+	
+	}
+
+article > header > h1, article > header > h2 {
+	margin: 0 0 0 .333em;
+	}
+
+article > header > h1 {
+	color: #FFFFFF;
+	}	
+article > header > h2 {
+	color: #333;
+}
+
+article > section {
+	padding: 3em;
+	}
+	
+article > .parallax {
+	padding: 0;
+	margin: 0;
+	}
+	
+a:visited, a:active {
+	color: #f66;
+	}
+</style>
+
+</head>
+<body>
+    <div class="sceneIndicatorBox"></div>
+	<article>
+    	<div class="parallax">
+        	<div class="scene1 scenes" id="scene1"><!--Contents of scene1--></div>
+            <div class="scene2 scenes" id="scene2"><!--Contents of scene2--></div>
+            <div class="scene3 scenes" id="scene3"><!--Contents of scene3--></div>
+            <div class="scene4 scenes" id="scene4"><!--Contents of scene4--></div>
+         </div>
+         <header>
+         	<h1>Derrick Douglass Designs</h1>
+         </header>
+          <section class="parallax">
+         	<div class="scene5 scenes" id="scene5"><!--Contents of scene5-->
+            	<div class="capture">
+                	SceneScream website Powered by Derrick Douglass Designs
+                </div>
+            </div>
+         </section>
+    </article>
+
+<script>
+$(document).ready(function(){
+
+   $(".sceneIndicatorBox")
+   		.text("scene 1")  //When the web page is intially loaded, sceneIndicatorBox is initially populated with the value of "scene 1"
+   		.css("box-shadow","4px 4px 7px #fff");
+	
+   var scenes = {}
+
+    $(document).scroll(function(){
+
+	     // Loop through every element that has a SCENES class to get the Top and Height positions of our SCENES in relation to the viewport 
+    $('.scenes').each(function(){
+		
+		var id = $(this).attr("id");
+		
+			// Get the top, right, Height, and left offset coordinates of our SCENES and assign them to the variable OBJ 
+		var obj = document.getElementById(id).getBoundingClientRect();
+		
+			// Place the Top postions of our SCENES into the SCENES array 
+			// Top is the number of pixels above or below the viewport
+       scenes[this.id + "Top"] = obj.top;  
+	   
+	   		// Place the Height postions of our SCENES into the SCENES array 
+	   scenes[this.id + "Height"] = 0 - obj.height; //Change .height to .innerHeight, .outerHeight, outerHeight(true); 
+	   
+	});
+			//console.log("scene1Top = ",scenes["scene1Top"]);
+			//console.log("scene1Height = ",scenes["scene1Height"]);
+			
+				// If the Top of a SCENE is above the viewport and the Height of a SCENE is below the viewport, we'll do something						 
+            if ( scenes["scene1Top"] <= 0 && scenes["scene1Top"] >= scenes["scene1Height"] ) {
+			$(".sceneIndicatorBox")
+			.text("scene 1")
+			.css("background-color","#F90")
+			.css("box-shadow","4px 4px 7px #fff");
+							} 
+			if ( scenes["scene2Top"] <= 0 && scenes["scene2Top"] >= scenes["scene2Height"] ) {
+			$(".sceneIndicatorBox")
+			.text("scene 2")
+			.css("background-color","#fff")
+			.css("box-shadow","4px 4px 7px #0f3");
+			}
+			if ( scenes["scene3Top"] <= 0 && scenes["scene3Top"] >= scenes["scene3Height"] ) {
+			$(".sceneIndicatorBox")
+			.text("scene 3")
+			.css("background-color","#0f3")
+			.css("box-shadow","4px 4px 7px #069");
+			}
+			if ( scenes["scene4Top"] <= 0 && scenes["scene4Top"] >= scenes["scene4Height"] ) {
+			$(".sceneIndicatorBox")
+			.text("scene 4")
+			.css("background-color","#069")
+			.css("box-shadow","4px 4px 7px #f6c");
+			}
+			if ( scenes["scene5Top"] <= 0 && scenes["scene5Top"] >= scenes["scene5Height"] ) {
+			$(".sceneIndicatorBox")
+			.text("scene 5")
+			.css("background-color","#f6c")
+			.css("box-shadow","4px 4px 7px #9cc");
+			}
+    });
+});
+</script>
+
+</body>
+</html>
